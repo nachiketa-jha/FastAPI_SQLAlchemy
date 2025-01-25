@@ -1,6 +1,6 @@
 from typing import Iterator
-from repos.posts import PostRepository
-from entities.posts import Post
+from db_repos.posts import PostRepository
+from schemas.posts import Post
 
 
 class PostService:
@@ -20,7 +20,7 @@ class PostService:
     def update_post(self,post_id, post_text, user_id):
         return self._repository.updatepost(post_id,post_text,user_id)
     
-    def delete_post_repo(self,post_id):
+    def delete_post_service(self,post_id):
         return self._repository.delete_post_repo(post_id)
     
     def delete_post_by_creatorOrAdmin(self,user_id,post_id):

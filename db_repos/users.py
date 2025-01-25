@@ -2,10 +2,14 @@ from contextlib import AbstractContextManager
 import datetime
 from typing import Callable, Iterator, Optional
 
-from schemas.user import UserResponse
+from bcrypt import hashpw, gensalt
+import re
+
 from sqlalchemy.orm import Session
 
-from entities.users import User
+from schemas.users import User
+
+from entities.user import GetUserResponse,CreateUserResponse,UpdateUserResponse, LoginUserResponse
 
 class UserRepository:
 
@@ -15,14 +19,21 @@ class UserRepository:
     def get_all(self):    # get all
         with self.session_factory() as session:
             users = session.query(User).all()
-            return [UserResponse.from_orm(user) for user in users]
+            return [GetUserResponse.from_orm(user) for user in users]
 
-    def get_by_id(self, user_id: int) -> UserResponse:  # get 1
+    def get_by_id(self, user_id: int):  # get 1
         with self.session_factory() as session:
             user = session.query(User).filter(User.user_id == user_id).first()
             if not user:
                 raise UserNotFoundError(user_id)
-            return UserResponse.from_orm(user)
+            return GetUserResponse.from_orm(user)
+        
+    def user_login(self,user_id):
+        with self.session_factory() as session:
+            user = session.query(User).filter(User.user_id == user_id).first()
+            if not user:
+                raise UserNotFoundError(user_id)
+            return LoginUserResponse.from_orm(user) 
 
     def add(self, user_id:int ,uname:str,password:str) -> User:  # add 1
         with self.session_factory() as session:
@@ -32,7 +43,7 @@ class UserRepository:
             session.commit()
             session.refresh(user)
             print("user added successfully")
-            return UserResponse.from_orm(user)
+            return CreateUserResponse.from_orm(user)
 
     def delete_by_id(self, user_id: int) -> None:    # delete 1
         with self.session_factory() as session:
@@ -41,13 +52,13 @@ class UserRepository:
                 raise UserNotFoundError(user_id)
             session.delete(entity)
             session.commit() 
-            return print("deleted")
+            print("deleted")
  
     def update_user(self, user_id, uname:Optional[str]=None, password:Optional[str]=None):   # update 1
         with self.session_factory() as session:
             user = session.query(User).filter(User.user_id == user_id).first()
             if user is None:
-                raise ValueError(f"User witsh id {user_id} not found")
+                raise UserNotFoundError(user_id)
             updated_at = datetime.datetime.now()
             if uname is not None:
                 user.uname = uname
@@ -57,7 +68,7 @@ class UserRepository:
             session.commit()
             session.refresh(user)
             print("Updated")
-            return UserResponse.from_orm(user)
+            return UpdateUserResponse.from_orm(user)
 
 
 class user_NotFoundError(Exception):
@@ -71,3 +82,4 @@ class user_NotFoundError(Exception):
 class UserNotFoundError(user_NotFoundError):
 
     entity_name: str = "User"
+

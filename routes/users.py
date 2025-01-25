@@ -9,6 +9,16 @@ router = APIRouter()
 
 # For users
 
+## user login
+@router.get("/user/login/{user_id}")
+@inject
+def user_login(
+    user_id: int,
+    password: str,
+    user_service: UserService = Depends(Provide[Container.user_service]),
+):
+    return user_service.login_user(user_id,password)
+
 ## view all
 @router.get("/users")
 @inject
@@ -41,10 +51,10 @@ def add(user_id: int, uname: str, password: str,
 def update_user(
     user_id: int,
     uname: Optional[str]=None,
-    password: Optional[str]=None,
+    new_password: Optional[str]=None,
     user_service: UserService = Depends(Provide[Container.user_service])
 ):
-    return user_service.update_userRepo(user_id,uname,password)
+    return user_service.update_user_service(user_id,uname,new_password)
 
 ## delete 1
 @router.delete("/users/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
@@ -53,9 +63,4 @@ def remove(
         user_id: int,
         user_service: UserService = Depends(Provide[Container.user_service]),
 ):
-    try:
-        user_service.delete_user_by_id(user_id)
-    except user_NotFoundError:
-        return Response(status_code=status.HTTP_404_NOT_FOUND)
-    else:
-        return Response(status_code=status.HTTP_204_NO_CONTENT)
+    user_service.delete_user_by_id(user_id)

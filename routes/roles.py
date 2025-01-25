@@ -19,6 +19,15 @@ def get_all_roles(
 ):
     return Role_service.get_all_roleService()
 
+## view 1
+@router.get("/role/{role_id}")
+@inject
+def get_role_by_id(
+    role_id:int,
+    Role_service: RoleService = Depends(Provide[Container.role_service])
+):
+    return Role_service.get_role(role_id)
+
 ## add 1
 @router.post("/role")
 @inject
@@ -28,16 +37,8 @@ def create_Role(
     is_admin: bool,
     Role_service: RoleService = Depends(Provide[Container.role_service])
 ):
-    return Role_service.add_role_roleRepo(role_id,role_name,is_admin)
+    return Role_service.add_role_service(role_id,role_name,is_admin)
 
-## get 1
-@router.get("/role/{role_id}")
-@inject
-def get_role_by_id(
-    role_id:int,
-    Role_service: RoleService = Depends(Provide[Container.role_service])
-):
-    return Role_service.get_role(role_id)
 
 ## update 1
 @router.put("/role")

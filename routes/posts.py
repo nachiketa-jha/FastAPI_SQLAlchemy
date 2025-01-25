@@ -41,13 +41,15 @@ def update_post(post_id: int,
              post_service: PostService = Depends(Provide[Container.post_service])):
     return post_service.update_post(post_id, post_text, user_id)
 
+## delete 1 by post_id
 @router.delete("/posts")
 @inject
 def delete_post(
     post_id:int,
     post_service: PostService = Depends(Provide[Container.post_service])):
-    return post_service.delete_post_repo(post_id)
+    return post_service.delete_post_service(post_id)
 
+## post can be deleted by admin or creator
 @router.delete("/posts/{user_id}")
 @inject
 def delete_post_by_id(

@@ -1,1 +1,1 @@
-"Schema folder"
+"schemas"
