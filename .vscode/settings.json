@@ -4,6 +4,5 @@
         "./repos",
         "./entities",
         "./routes"
-    ],
-    "git.ignoreLimitWarning": true
+    ]
 }

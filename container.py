@@ -2,16 +2,16 @@ from dependency_injector import containers, providers
 
 from database import Database
 
-from repos.users import UserRepository
+from db_repos.users import UserRepository
 from services.users import UserService
 
-from repos.posts import PostRepository
+from db_repos.posts import PostRepository
 from services.posts import PostService
 
-from repos.roles import RoleRepository
+from db_repos.roles import RoleRepository
 from services.roles import RoleService
 
-from repos.user_roles import UserRoleRepository
+from db_repos.user_roles import UserRoleRepository
 from services.user_roles import UserRoleService
 
 
