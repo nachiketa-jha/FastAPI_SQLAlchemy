@@ -1,6 +1,6 @@
 from contextlib import AbstractContextManager
 import datetime
-from typing import Callable, Iterator, Optional
+from typing import Callable, Iterator, Optional, Generator
 
 from bcrypt import hashpw, gensalt
 import re
@@ -13,7 +13,7 @@ from entities.user import GetUserResponse,CreateUserResponse,UpdateUserResponse,
 
 class UserRepository:
 
-    def __init__(self, session_factory: Callable[..., AbstractContextManager[Session]]) -> None:
+    def __init__(self, session_factory: Generator[Session, None, None]) -> None:
         self.session_factory = session_factory
 
     def get_all(self):    # get all

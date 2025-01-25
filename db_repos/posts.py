@@ -2,7 +2,7 @@ from contextlib import AbstractContextManager
 import datetime
 from http.client import HTTPException
 from operator import and_
-from typing import Callable, Iterator
+from typing import Callable, Iterator, Generator
 
 from sqlalchemy.orm import Session
 
@@ -14,7 +14,7 @@ from entities.post import CreatePostResponse,UpdatePostResponse,GetPostByIDRespo
 
 class PostRepository:
 
-    def __init__(self, session_factory: Callable[..., AbstractContextManager[Session]]) -> None:
+    def __init__(self, session_factory: Generator[Session, None, None]) -> None:
         self.session_factory = session_factory
 
     def get_all_posts_repo(self) -> Iterator[Post]:

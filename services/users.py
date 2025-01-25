@@ -35,7 +35,6 @@ class UserService:
         if isinstance(password_validation, dict): 
             return password_validation
         hashed_password = self.password_encrypt.encrypt(password)
-        # Add user to repository
         return self._repository.add(user_id, uname, hashed_password)
     
     def update_user_service(self, user_id: str, uname: Optional[str], new_password: Optional[str]):  # update 1

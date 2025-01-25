@@ -1,6 +1,6 @@
 from contextlib import AbstractContextManager
 import datetime
-from typing import Callable, Iterator
+from typing import Callable, Iterator, Generator
 
 from sqlalchemy.orm import Session
 
@@ -9,7 +9,7 @@ from schemas.roles import Role
 from entities.role import CreateRoleResponse,UpdateRoleResponse,GetRoleResponse
 
 class RoleRepository:
-    def __init__(self, session_factory: Callable[..., AbstractContextManager[Session]]) -> None:
+    def __init__(self, session_factory: Generator[Session, None, None]) -> None:
         self.session_factory = session_factory
 
     def get_all(self):

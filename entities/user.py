@@ -8,7 +8,7 @@ class UserResponse(BaseModel):
     created_at: datetime
 
     class Config:
-        # orm_mode = True
+        orm_mode = True
         from_attributes = True
 
 class GetUserResponse(BaseModel):
@@ -17,7 +17,7 @@ class GetUserResponse(BaseModel):
     # password: str
 
     class Config:
-        # orm_mode = True
+        orm_mode = True
         from_attributes = True
 
 class CreateUserResponse(BaseModel):
@@ -26,7 +26,7 @@ class CreateUserResponse(BaseModel):
     created_at: datetime
 
     class Config:
-        # orm_mode = True
+        orm_mode = True
         from_attributes = True
 
 class UpdateUserResponse(BaseModel):
@@ -36,7 +36,7 @@ class UpdateUserResponse(BaseModel):
     updated_at: datetime
 
     class Config:
-        # orm_mode = True
+        orm_mode = True
         from_attributes = True
 
 class LoginUserResponse(BaseModel):
