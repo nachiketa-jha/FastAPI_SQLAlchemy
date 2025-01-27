@@ -24,20 +24,20 @@ class UserService:
 
         self.password_encrypt = PasswordEncrypt()
 
-    def get_users(self):    # get all
+    def get_users(self): 
         return self._repository.get_all()
 
-    def get_user_by_id(self, user_id: int) -> User:   # get 1
+    def get_user_by_id(self, user_id: int) -> User:  
         return self._repository.get_by_id(user_id)
 
-    def create_user(self, user_id: int, uname: str, password: str):   # add 1
+    def create_user(self, user_id: int, uname: str, password: str): 
         password_validation = self.password_rule_engine.is_valid(password)
         if isinstance(password_validation, dict): 
             return password_validation
         hashed_password = self.password_encrypt.encrypt(password)
         return self._repository.add(user_id, uname, hashed_password)
     
-    def update_user_service(self, user_id: str, uname: Optional[str], new_password: Optional[str]):  # update 1
+    def update_user_service(self, user_id: str, uname: Optional[str], new_password: Optional[str]): 
         if new_password:
             password_validation = self.password_rule_engine.is_valid(new_password)
             if isinstance(password_validation, dict): 

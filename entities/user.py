@@ -14,7 +14,7 @@ class UserResponse(BaseModel):
 class GetUserResponse(BaseModel):
     user_id: int
     uname: str
-    # password: str
+
 
     class Config:
         orm_mode = True
