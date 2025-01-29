@@ -52,9 +52,9 @@ class UserService:
         user = self._repository.user_login(user_id)
         
         if not user:
-            return {"error": "User not found"}
+            return {"Error": "User not found"}
 
         if not self.password_encrypt.verify(password,user.password):
             raise HTTPException(status_code=401)
 
-        return {"success": "Login successful", "user": user}
+        return {"Success": "Login successful", "user": user}
